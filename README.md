@@ -23,13 +23,6 @@ You can install the package via composer:
 composer require sawirricardo/laravel-filepond
 ```
 
-You can publish and run the migrations with:
-
-```bash
-php artisan vendor:publish --tag="laravel-filepond-migrations"
-php artisan migrate
-```
-
 You can publish the config file with:
 
 ```bash
@@ -40,21 +33,25 @@ This is the contents of the published config file:
 
 ```php
 return [
+    'server_url' => 'laravel-filepond',
+    'disk' => 'local',
+    'rules' => ['required', 'file', 'max:12288'], // 12MB
+    'directory' => 'filepond-tmp',
+    'chunk_directory' => 'filepond-chunks',
+    'middleware' => ['web', 'throttle:60,1'],
+    'preview_mimes' => [
+        // Supported file types for temporary pre-signed file URLs.
+        'png', 'gif', 'bmp', 'svg', 'wav', 'mp4',
+        'mov', 'avi', 'wmv', 'mp3', 'm4a',
+        'jpg', 'jpeg', 'mpga', 'webp', 'wma',
+    ],
+    'max_upload_time' => 5, // Max duration (in minutes) before an upload gets invalidated.
 ];
-```
-
-Optionally, you can publish the views using
-
-```bash
-php artisan vendor:publish --tag="laravel-filepond-views"
 ```
 
 ## Usage
 
-```php
-$filepond = new Sawirricardo\LaravelFilepond();
-echo $filepond->echoPhrase('Hello, Sawirricardo!');
-```
+Just setup your filepond regularly, and the backend will handle automatically for you.
 
 ## Testing
 
