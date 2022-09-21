@@ -4,6 +4,7 @@ namespace Sawirricardo\LaravelFilepond;
 
 use Illuminate\Support\Facades\Route;
 use Sawirricardo\LaravelFilepond\Commands\FilepondCleanCommand;
+use Sawirricardo\LaravelFilepond\Http\Controllers\LaravelFilepondController;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
