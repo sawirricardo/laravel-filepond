@@ -5,7 +5,7 @@ namespace Sawirricardo\LaravelFilepond\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
 
-class FilepondCommand extends Command
+class FilepondCleanCommand extends Command
 {
     public $signature = 'filepond:clean {days=7}';
 
