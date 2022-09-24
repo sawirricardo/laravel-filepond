@@ -30,13 +30,14 @@ class LaravelFilepondController
     {
         $randomId = Str::random();
         $fileLocation = config('filepond.directory').DIRECTORY_SEPARATOR.$randomId;
-        $filepondId = Crypt::encryptString($fileLocation);
 
         if ($request->hasHeader('Upload-Length')) {
             $file = Storage::disk(config('filepond.disk'))
                 ->put($fileLocation, '');
 
             abort_unless($file, 500, 'Could not save file', ['Content-Type' => 'text/plain']);
+
+            $filepondId = Crypt::encryptString($fileLocation);
 
             return response($filepondId, 200, ['Content-Type' => 'text/plain']);
         }
@@ -46,6 +47,8 @@ class LaravelFilepondController
         $file = $request->file('filepond')->storeAs($fileLocation, $request->file('filepond')->hashName());
 
         abort_unless($file, 500, 'Could not save file', ['Content-Type' => 'text/plain']);
+
+        $filepondId = Crypt::encryptString($file);
 
         return response($filepondId, 200, ['Content-Type' => 'text/plain']);
     }
