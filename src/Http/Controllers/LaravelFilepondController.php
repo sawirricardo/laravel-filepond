@@ -48,7 +48,9 @@ class LaravelFilepondController
             ? $request->file('filepond')->getClientOriginalName()
             : $request->file('filepond')->hashName();
 
-        $file = $request->file('filepond')->storeAs($fileLocation, $filename);
+        $file = $request->file('filepond')->storeAs($fileLocation, $filename, [
+            'disk' => config('filepond.disk'),
+        ]);
 
         abort_unless($file, 500, 'Could not save file', ['Content-Type' => 'text/plain']);
 
