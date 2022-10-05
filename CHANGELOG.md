@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-filepond` will be documented in this file.
 
+## 0.0.8 - 2022-10-05
+
+Fix bug using config
+
 ## 0.0.7 - 2022-10-05
 
 store file in specified disk
