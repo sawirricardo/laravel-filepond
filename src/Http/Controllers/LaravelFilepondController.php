@@ -139,7 +139,7 @@ class LaravelFilepondController
         $data = '';
         foreach ($chunks as $chunk) {
             // Get chunk contents
-            $chunkContents = Storage::disk('filepond.disk')->get($chunk);
+            $chunkContents = Storage::disk(config('filepond.disk'))->get($chunk);
 
             // Laravel's local disk implementation is quite inefficient for appending data to existing files
             // To be at least a bit more efficient, we build the final content ourselves, but the most efficient
