@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-filepond` will be documented in this file.
 
+## 0.0.5 - 2022-10-05
+
+Optionally allow original filename
+
 ## 0.0.4 - 2022-09-24
 
 - Fix bug should encrypt full path if not chunk
