@@ -44,7 +44,7 @@ class LaravelFilepondController
 
         $request->validate(['filepond' => config('filepond.rules')]);
 
-        $filename = $request->boolean('preserve_filename')
+        $filename = $request->boolean('preserve_filename', (bool) $request->header('X-Preserve-Filename'))
             ? $request->file('filepond')->getClientOriginalName()
             : $request->file('filepond')->hashName();
 
