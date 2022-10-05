@@ -6,6 +6,7 @@ use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Sawirricardo\LaravelFilepond\Filepond;
 
 class LaravelFilepondController
@@ -27,11 +28,8 @@ class LaravelFilepondController
 
     public function store(Request $request)
     {
-        $filename = $request->boolean('preserve_filename', (bool) $request->header('X-Preserve-Filename'))
-            ? $request->file('filepond')->getClientOriginalName()
-            : $request->file('filepond')->hashName();
-
-        $fileLocation = config('filepond.directory').DIRECTORY_SEPARATOR.str($filename)->slug();
+        $randomId = Str::random();
+        $fileLocation = config('filepond.directory').DIRECTORY_SEPARATOR.$randomId;
 
         if ($request->hasHeader('Upload-Length')) {
             $file = Storage::disk(config('filepond.disk'))
@@ -45,6 +43,10 @@ class LaravelFilepondController
         }
 
         $request->validate(['filepond' => config('filepond.rules')]);
+
+        $filename = $request->boolean('preserve_filename', (bool) $request->header('X-Preserve-Filename'))
+            ? $request->file('filepond')->getClientOriginalName()
+            : $request->file('filepond')->hashName();
 
         $file = $request->file('filepond')->storeAs($fileLocation, $filename, [
             'disk' => config('filepond.disk'),
