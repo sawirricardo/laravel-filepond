@@ -86,7 +86,9 @@ class LaravelFilepondController
         }
 
         if ($request->boolean('preserve_filename', (bool) $request->header('X-Preserve-Filename'))) {
-            $finalPath .= DIRECTORY_SEPARATOR.request()->header('Upload-Name');
+            if (Storage::disk(config('filepond.disk'))->makeDirectory($finalPath)) {
+                $finalPath .= DIRECTORY_SEPARATOR.request()->header('Upload-Name');
+            }
         }
 
         Storage::disk(config('filepond.disk'))
