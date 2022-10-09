@@ -17,7 +17,7 @@ class Filepond
             || str($filePath)->startsWith(config('filepond.chunk_directory'));
 
         if (is_dir($path = Storage::disk(config('filepond.disk'))->path($filePath))) {
-            $filePath = collect(Storage::disk(config('filepond.disk'))->files($path))->first();
+            $filePath = collect(Storage::disk(config('filepond.disk'))->files($filePath))->first();
             $isFilePathValid = ! empty($filePath);
         }
 
