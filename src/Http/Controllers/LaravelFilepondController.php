@@ -44,7 +44,7 @@ class LaravelFilepondController
 
         $request->validate(['filepond' => config('filepond.rules')]);
 
-        $filename = $request->boolean('preserve_filename', (bool) $request->header('X-Preserve-Filename'))
+        $filename = $this->shouldPreserveFilename()
             ? $request->file('filepond')->getClientOriginalName()
             : $request->file('filepond')->hashName();
 
@@ -85,17 +85,16 @@ class LaravelFilepondController
             return response()->noContent();
         }
 
-        if ($request->boolean('preserve_filename', (bool) $request->header('X-Preserve-Filename'))) {
-            if (Storage::disk(config('filepond.disk'))->makeDirectory($finalPath)) {
-                $finalPath .= DIRECTORY_SEPARATOR.request()->header('Upload-Name');
-            }
-        }
-
         Storage::disk(config('filepond.disk'))
             ->put($finalPath, $this->createFinalFile($baseDir), ['mimetype' => 'application/octet-stream']);
 
         Storage::disk(config('filepond.disk'))
             ->deleteDirectory($baseDir);
+
+        if ($this->shouldPreserveFilename()) {
+            Storage::disk(config('filepond.disk'))
+                ->move($finalPath, $finalPath.DIRECTORY_SEPARATOR.$request->header('Upload-Name'));
+        }
 
         return response()->noContent();
     }
@@ -155,5 +154,10 @@ class LaravelFilepondController
         }
 
         return $data;
+    }
+
+    private function shouldPreserveFilename()
+    {
+        return request()->boolean('preserve_filename', (bool) request()->header('X-Preserve-Filename'));
     }
 }
