@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-filepond` will be documented in this file.
 
+## 0.0.9 - 2022-10-09
+
+Preserve filename for chunk upload
+
 ## 0.0.8 - 2022-10-05
 
 Fix bug using config
