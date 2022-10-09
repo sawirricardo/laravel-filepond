@@ -93,7 +93,11 @@ class LaravelFilepondController
 
         if ($this->shouldPreserveFilename()) {
             Storage::disk(config('filepond.disk'))
-                ->move($finalPath, $finalPath.DIRECTORY_SEPARATOR.$request->header('Upload-Name'));
+                ->move($finalPath, $finalPath.'-tobemoved');
+            Storage::disk(config('filepond.disk'))
+                ->makeDirectory($finalPath);
+            Storage::disk(config('filepond.disk'))
+                ->move($finalPath.'-tobemoved', $finalPath.DIRECTORY_SEPARATOR.$request->header('Upload-Name'));
         }
 
         return response()->noContent();
