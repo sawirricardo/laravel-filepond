@@ -15,7 +15,6 @@ class FilepondServiceProvider extends PackageServiceProvider
         $package
             ->name('laravel-filepond')
             ->hasConfigFile()
-            ->hasViews()
             ->hasCommand(FilepondCleanCommand::class);
     }
 
