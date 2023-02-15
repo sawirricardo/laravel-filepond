@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-filepond` will be documented in this file.
 
+## 0.1.5 - 2022-11-07
+
+remove hasViews() temporarily
+
 ## 0.1.4 - 2022-10-09
 
 bugfix wrong reference
